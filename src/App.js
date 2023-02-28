@@ -1,28 +1,32 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { Routes, Route } from 'react-router-dom';
+
+import { asyncPreloadProcess } from './states/isPreload/action';
+
 import Loading from './components/Loading';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import Navigation from './components/Navigation';
 import RegisterPage from './pages/RegisterPage';
 import DetailPage from './pages/DetailPage';
+import { asyncUnsetAuthUser } from './states/authUser/action';
 
 function App() {
   const {
     authUser = null,
     isPreload = false,
-  } = {}; // @TODO: get authUser and isPreLoad state from store
+  } = useSelector((states) => states);
 
-  const dispatch = null; // @TODO: get dispatch function from store
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // @TODO: dispatch async action to preload app
-
+    dispatch(asyncPreloadProcess());
   }, [dispatch]);
 
   const onSignOut = () => {
-    // @TODO: dispatch async action to sign out
-
+    dispatch(asyncUnsetAuthUser());
   };
 
   if (isPreload) {
